@@ -1,0 +1,20 @@
+## Visual Studio / IDE
+.vs/
+*.user
+*.userosscache
+*.sln.docstates
+*.userprefs
+
+## .NET Build & Output (todos os subdiretórios)
+**/bin/
+**/obj/
+*.log
+
+## OS / Outros
+.DS_Store
+Thumbs.db
+# Arquivos de configuracao local/sensíveis
+appsettings.Development.json
+appsettings.Production.json
+appsettings.Local.json
+*.env

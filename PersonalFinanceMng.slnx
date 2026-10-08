@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="PersonalFinance.Domain/PersonalFinanceMng.Domain.csproj" />
+  <Project Path="PersonalFinanceMng.Application/PersonalFinanceMng.Application.csproj" />
+  <Project Path="PersonalFinanceMng.Infrastructure/PersonalFinanceMng.Infrastructure.csproj" />
+  <Project Path="PersonalFinanceMng.Tests/PersonalFinanceMng.Tests.csproj" />
+  <Project Path="PersonalFinanceMng/PersonalFinanceMng.Api.csproj" />
+</Solution>
