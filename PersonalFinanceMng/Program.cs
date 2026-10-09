@@ -1,10 +1,15 @@
-﻿using PersonalFinanceMng.Application.Extensions;
+﻿using Microsoft.EntityFrameworkCore;
+using PersonalFinanceMng.Application.Extensions;
 using PersonalFinanceMng.Infrastructure;
+using Serilog;
+using Serilog.Formatting.Compact;
 
 try
 {
     var builder = WebApplication.CreateBuilder(args);
-
+    //logger
+    builder.Host.UseSerilog((context, configuration) =>
+    configuration.ReadFrom.Configuration(context.Configuration));
     // Registra os controllers e documentação
     builder.Services.AddControllers();
 
@@ -15,8 +20,27 @@ try
     // Injeção de dependência das camadas
     builder.Services.AddApplication();
     builder.Services.AddInfrastructure(builder.Configuration);
+    builder.Host.UseSerilog((context, configuration) =>
+    {
+        configuration.ReadFrom.Configuration(context.Configuration);
+
+
+        if (context.HostingEnvironment.IsProduction())
+        {
+            configuration.WriteTo.Console(new CompactJsonFormatter());
+        }
+        else
+        {
+            configuration.WriteTo.Console();
+        }
+
+    }
+);
 
     var app = builder.Build();
+
+
+    app.UseSerilogRequestLogging();
 
     // Teste de conexão temporário
     using (var scope = app.Services.CreateScope())
@@ -61,7 +85,7 @@ try
     app.UseHttpsRedirection();
     app.UseAuthorization();
     app.MapControllers();
-
+    Log.Information("Iniciando a aplicação...Logger working");
     app.Run();
 }
 catch (Exception ex)
@@ -71,4 +95,8 @@ catch (Exception ex)
     Console.WriteLine(ex.ToString());
     Console.WriteLine("==================================================");
     throw;
+}
+finally
+{
+    Log.CloseAndFlush();
 }
