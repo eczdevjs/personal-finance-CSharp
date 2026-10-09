@@ -34,8 +34,7 @@ try
             configuration.WriteTo.Console();
         }
 
-    }
-);
+    });
 
     var app = builder.Build();
 
